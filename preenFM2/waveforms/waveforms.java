@@ -30,7 +30,8 @@ class waveforms {
         SIN,
 	SINSQUARE,
 	SINORZERO,
-	SINPOS
+	SINPOS,
+	FORMANT1
     };
     
     public static void main(String[] args) {
@@ -92,17 +93,19 @@ class waveforms {
     	System.out.println("};");
 	System.out.println("");
     	System.out.println("float sinPosTable[] __attribute__ ((section(\".ccm\"))) = {");    	
-    	System.out.println(getWaveFormData(WaveForm.SINPOS, numberOfSteps /2, order));
+    	System.out.println(getWaveFormData(WaveForm.SINPOS, numberOfSteps /4, order));
     	System.out.println("};");
 	System.out.println("");
     	System.out.println("float sinOrZeroTable[] __attribute__ ((section(\".ccm\"))) = {"); 
-    	System.out.println(getWaveFormData(WaveForm.SINORZERO, numberOfSteps /2, order));
+    	System.out.println(getWaveFormData(WaveForm.SINORZERO, numberOfSteps /4, order));
     	System.out.println("};");
 	System.out.println("");
     	System.out.println("float sinSquareTable[] __attribute__ ((section(\".ccm\"))) = {"); 
     	System.out.println(getWaveFormData(WaveForm.SINSQUARE, numberOfSteps / 2, order));
     	System.out.println("};");
-  	
+   	System.out.println("float Formant1Table[] __attribute__ ((section(\".ccm\"))) = {"); 
+    	System.out.println(getWaveFormData(WaveForm.FORMANT1, numberOfSteps / 2, order));
+    	System.out.println("};"); 	
     }
 
     static String getWaveFormData(WaveForm type, int numberOfSteps, int order) {
@@ -185,6 +188,13 @@ class waveforms {
                 value = java.lang.Math.sin(step);
 		value *= value;
                 break;
+
+            case FORMANT1:
+                value = java.lang.Math.sin(step);
+		value *= value;
+                break;
+
+
             case SINORZERO:
                 value = java.lang.Math.sin(step);
 		if (value < 0) {
